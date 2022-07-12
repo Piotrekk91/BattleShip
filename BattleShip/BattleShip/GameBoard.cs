@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace BattleShip
 {
-    internal class GameBoard
+    public class GameBoard
     {
+        public List<Boat> Boats { get; set; }
+        public List<Coordinate> GameField { get; set; }
+
+        public GameBoard()
+        {
+            Boats = new List<Boat>();
+            GameField = new List<Coordinate>();
+        }
     }
 }
