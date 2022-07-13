@@ -30,20 +30,7 @@ namespace BattleShip
                 }
             }
         }
-        public void GenerateShip()
-        {
-            var listCoord = new List<Coordinate>();
-
-            for(int i = 0; i < 5; i++)
-            {
-                var coord = GameField[i];
-                coord.IsAvailable = false;
-                listCoord.Add(coord);
-            }
-            var ship = new Ship(ShipType.Carrier,listCoord);
-            Ship.Add(ship);
-        }
-        
+   
         public void ShipPlacementInAvailablePlace()
         {
             var availableListCoord = new List<Coordinate>();
@@ -54,8 +41,8 @@ namespace BattleShip
                 {
                     availableListCoord.Add(coord);                    
                 }
-            }
-            FindShipCoordinates(availableListCoord);
+            }            
+            var shipCoord = FindShipCoordinates(availableListCoord);
         }
 
         public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoord)
