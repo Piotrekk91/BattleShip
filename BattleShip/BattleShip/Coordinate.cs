@@ -10,13 +10,19 @@ namespace BattleShip
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public bool IsAvaiable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public Coordinate(int x, int y)
         {
             X = x;
             Y = y;
-            IsAvaiable = true;
+            IsAvailable = true;
+        }
+
+        public override string ToString()
+        {
+            var returnString = ($"X:{X}, Y:{Y}, {IsAvailable}");
+            return returnString;
         }
     }
 }

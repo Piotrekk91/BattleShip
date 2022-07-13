@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BattleShip
 {
-    public class Boat
+    public class Ship
     {
         public ShipType ShipType { get; set; }
 
         public List<Coordinate> ShipCoordinates { get; set; }
         public bool IsDestroyed { get; set; }
 
-        public Boat(ShipType shipType, List<Coordinate> shipCoordinates)
+        public Ship(ShipType shipType, List<Coordinate> shipCoordinates)
         {
             ShipType = shipType;
             ShipCoordinates = shipCoordinates;
