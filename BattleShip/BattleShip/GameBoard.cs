@@ -31,7 +31,7 @@ namespace BattleShip
             }
         }
    
-        public void ShipPlacementInAvailablePlace()
+        public List<Coordinate> ShipPlacementInAvailablePlace()
         {
             var availableListCoord = new List<Coordinate>();
 
@@ -42,7 +42,7 @@ namespace BattleShip
                     availableListCoord.Add(coord);                    
                 }
             }            
-            var shipCoord = FindShipCoordinates(availableListCoord);
+            return FindShipCoordinates(availableListCoord);
         }
 
         public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoord)
@@ -51,6 +51,7 @@ namespace BattleShip
             var startPoint = availableListCoord[randCoord];
             var randDirection = DirectionChoice();
             var shipCoord = new List<Coordinate>();
+            shipCoord.Add(startPoint);
 
             if (randDirection == Direction.Right)
             {
