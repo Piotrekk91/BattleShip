@@ -31,7 +31,7 @@ namespace BattleShip
             }
         }
    
-        public List<Coordinate> ShipPlacementInAvailablePlace()
+        public List<Coordinate> GenerateShip(ShipType shipType)
         {
             var availableListCoords = new List<Coordinate>();
 
@@ -42,14 +42,17 @@ namespace BattleShip
                     availableListCoords.Add(coord);                    
                 }
             }            
-            var shipCoords = FindShipCoordinates(availableListCoords);
+            var shipCoords = FindShipCoordinates(availableListCoords,shipType);
 
             DisableSelectedCoordinates(shipCoords);
 
-            AddShipModelToShipList(ShipType.Carrier, shipCoords);
+            AddShipModelToShipList(shipType, shipCoords);
+
+            DisableNeightboursCoordinates(shipCoords, availableListCoords);
 
             return shipCoords;
         }
+
         public void DisableSelectedCoordinates(List<Coordinate> shipCoords)
         {
             foreach(var coord in shipCoords)
@@ -57,6 +60,7 @@ namespace BattleShip
                 coord.IsAvailable = false;
             }
         }
+
         public void AddShipModelToShipList(ShipType shipType, List<Coordinate> shipCoords)
         {
             var ship = new Ship(shipType, shipCoords);
@@ -80,17 +84,18 @@ namespace BattleShip
             }
         }
 
-        public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoords)
+        public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoords, ShipType shipType)
         {
             var randCoord = _random.Next(availableListCoords.Count);
             var startPoint = availableListCoords[randCoord];
             var randDirection = DirectionChoice();
             var shipCoords = new List<Coordinate>();
             shipCoords.Add(startPoint);
+            var shipLength = (int)shipType;
 
             if (randDirection == Direction.Right)
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 1; i < shipLength; i++)
                 {
                     var nextPoint = availableListCoords.SingleOrDefault(element => element.X == startPoint.X + i
                     && element.Y == startPoint.Y);
@@ -100,14 +105,14 @@ namespace BattleShip
                     }
                     else
                     {
-                        return FindShipCoordinates(availableListCoords);                        
+                        return FindShipCoordinates(availableListCoords, shipType);                        
                     }
 
                 }
             }
             else if (randDirection == Direction.Down)
             {
-                for (int i = 1; i < 5; i++)
+                for (int i = 1; i < shipLength; i++)
                 {
                     var nextPoint = availableListCoords.SingleOrDefault(element => element.X == startPoint.X
                     && element.Y == startPoint.Y + i);
@@ -117,7 +122,7 @@ namespace BattleShip
                     }
                     else
                     {
-                        return FindShipCoordinates(availableListCoords);
+                        return FindShipCoordinates(availableListCoords,shipType);
                     }
                 }
             }
