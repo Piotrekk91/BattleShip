@@ -33,57 +33,74 @@ namespace BattleShip
    
         public List<Coordinate> ShipPlacementInAvailablePlace()
         {
-            var availableListCoord = new List<Coordinate>();
+            var availableListCoords = new List<Coordinate>();
 
             foreach(var coord in GameField)
             {
                 if (coord.IsAvailable)
                 {
-                    availableListCoord.Add(coord);                    
+                    availableListCoords.Add(coord);                    
                 }
             }            
-            var shipCoord = FindShipCoordinates(availableListCoord);
+            var shipCoords = FindShipCoordinates(availableListCoords);
 
-            DisableSelectedCoordinates(shipCoord);
+            DisableSelectedCoordinates(shipCoords);
 
-            AddShipModelToShipList(ShipType.Carrier, shipCoord);
+            AddShipModelToShipList(ShipType.Carrier, shipCoords);
 
-            return shipCoord;
+            return shipCoords;
         }
-        public void DisableSelectedCoordinates(List<Coordinate> shipCoord)
+        public void DisableSelectedCoordinates(List<Coordinate> shipCoords)
         {
-            foreach(var coord in shipCoord)
+            foreach(var coord in shipCoords)
             {
                 coord.IsAvailable = false;
             }
         }
-        public void AddShipModelToShipList(ShipType shipType, List<Coordinate> shipCoord)
+        public void AddShipModelToShipList(ShipType shipType, List<Coordinate> shipCoords)
         {
-            var ship = new Ship(shipType, shipCoord);
+            var ship = new Ship(shipType, shipCoords);
             Ship.Add(ship);            
         }
-
-        public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoord)
+        public void DisableNeightboursCoordinates(List<Coordinate> shipCoords, List<Coordinate> availableListCoords)
         {
-            var randCoord = _random.Next(availableListCoord.Count);
-            var startPoint = availableListCoord[randCoord];
+            var disabledCoords = new List<Coordinate>();
+
+            foreach(var coord in shipCoords)
+            {
+                var xValues = Enumerable.Range(coord.X - 1, 3).ToList();
+                var yValues = Enumerable.Range(coord.Y - 1, 3).ToList();
+
+                var coordsToDisable = availableListCoords.Where(c => xValues.Contains(c.X)
+                    && yValues.Contains(c.Y) && !disabledCoords.Any(d => d.X == c.X && d.Y == c.Y)).ToList();
+                
+                coordsToDisable.ForEach(c => c.IsAvailable = false);
+
+                disabledCoords.AddRange(coordsToDisable);
+            }
+        }
+
+        public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoords)
+        {
+            var randCoord = _random.Next(availableListCoords.Count);
+            var startPoint = availableListCoords[randCoord];
             var randDirection = DirectionChoice();
-            var shipCoord = new List<Coordinate>();
-            shipCoord.Add(startPoint);
+            var shipCoords = new List<Coordinate>();
+            shipCoords.Add(startPoint);
 
             if (randDirection == Direction.Right)
             {
                 for (int i = 1; i < 5; i++)
                 {
-                    var nextPoint = availableListCoord.SingleOrDefault(element => element.X == startPoint.X + i
+                    var nextPoint = availableListCoords.SingleOrDefault(element => element.X == startPoint.X + i
                     && element.Y == startPoint.Y);
                     if(nextPoint != null)
                     {
-                        shipCoord.Add(nextPoint);
+                        shipCoords.Add(nextPoint);
                     }
                     else
                     {
-                        return FindShipCoordinates(availableListCoord);                        
+                        return FindShipCoordinates(availableListCoords);                        
                     }
 
                 }
@@ -92,19 +109,19 @@ namespace BattleShip
             {
                 for (int i = 1; i < 5; i++)
                 {
-                    var nextPoint = availableListCoord.SingleOrDefault(element => element.X == startPoint.X
+                    var nextPoint = availableListCoords.SingleOrDefault(element => element.X == startPoint.X
                     && element.Y == startPoint.Y + i);
                     if (nextPoint != null)
                     {
-                        shipCoord.Add(nextPoint);
+                        shipCoords.Add(nextPoint);
                     }
                     else
                     {
-                        return FindShipCoordinates(availableListCoord);
+                        return FindShipCoordinates(availableListCoords);
                     }
                 }
             }
-            return shipCoord;
+            return shipCoords;
         }
 
         public Direction DirectionChoice()
