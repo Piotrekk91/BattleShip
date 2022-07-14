@@ -42,7 +42,17 @@ namespace BattleShip
                     availableListCoord.Add(coord);                    
                 }
             }            
-            return FindShipCoordinates(availableListCoord);
+            var shipCoord = FindShipCoordinates(availableListCoord);
+
+            return DisableSelectedCoordinates(shipCoord);
+        }
+        public List<Coordinate> DisableSelectedCoordinates(List<Coordinate> shipCoord)
+        {
+            foreach(var coord in shipCoord)
+            {
+                coord.IsAvailable = false;
+            }
+            return shipCoord;
         }
 
         public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoord)
@@ -70,7 +80,7 @@ namespace BattleShip
 
                 }
             }
-            else
+            else if (randDirection == Direction.Down)
             {
                 for (int i = 1; i < 5; i++)
                 {
@@ -85,7 +95,6 @@ namespace BattleShip
                         return FindShipCoordinates(availableListCoord);
                     }
                 }
-
             }
             return shipCoord;
         }
