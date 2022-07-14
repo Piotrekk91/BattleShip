@@ -9,13 +9,13 @@ namespace BattleShip
 {
     public class GameBoard
     {
-        public List<Ship> Ship { get; set; }
+        public List<Ship> Ships { get; set; }
         public List<Coordinate> GameField { get; set; }
         private readonly Random _random = new Random();
 
         public GameBoard()
         {
-            Ship = new List<Ship>();
+            Ships = new List<Ship>();
             GameField = new List<Coordinate>();
         }
 
@@ -64,7 +64,7 @@ namespace BattleShip
         public void AddShipModelToShipList(ShipType shipType, List<Coordinate> shipCoords)
         {
             var ship = new Ship(shipType, shipCoords);
-            Ship.Add(ship);            
+            Ships.Add(ship);            
         }
         public void DisableNeightboursCoordinates(List<Coordinate> shipCoords, List<Coordinate> availableListCoords)
         {
