@@ -70,6 +70,23 @@ namespace BattleShip
 
                 }
             }
+            else
+            {
+                for (int i = 1; i < 5; i++)
+                {
+                    var nextPoint = availableListCoord.SingleOrDefault(element => element.X == startPoint.X
+                    && element.Y == startPoint.Y + i);
+                    if (nextPoint != null)
+                    {
+                        shipCoord.Add(nextPoint);
+                    }
+                    else
+                    {
+                        return FindShipCoordinates(availableListCoord);
+                    }
+                }
+
+            }
             return shipCoord;
         }
 
