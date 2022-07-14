@@ -20,5 +20,10 @@ namespace BattleShip
             ShipCoordinates = shipCoordinates;
             IsDestroyed = false;
         }
+        public override string ToString()
+        {
+            var returnString = ($"{ShipType}");
+            return returnString;
+        }
     }
 }

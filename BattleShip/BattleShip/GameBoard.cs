@@ -44,15 +44,23 @@ namespace BattleShip
             }            
             var shipCoord = FindShipCoordinates(availableListCoord);
 
-            return DisableSelectedCoordinates(shipCoord);
+            DisableSelectedCoordinates(shipCoord);
+
+            AddShipModelToShipList(ShipType.Carrier, shipCoord);
+
+            return shipCoord;
         }
-        public List<Coordinate> DisableSelectedCoordinates(List<Coordinate> shipCoord)
+        public void DisableSelectedCoordinates(List<Coordinate> shipCoord)
         {
             foreach(var coord in shipCoord)
             {
                 coord.IsAvailable = false;
             }
-            return shipCoord;
+        }
+        public void AddShipModelToShipList(ShipType shipType, List<Coordinate> shipCoord)
+        {
+            var ship = new Ship(shipType, shipCoord);
+            Ship.Add(ship);            
         }
 
         public List<Coordinate> FindShipCoordinates(List<Coordinate> availableListCoord)
