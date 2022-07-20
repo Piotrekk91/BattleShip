@@ -35,7 +35,17 @@ namespace BattleShip
                 }
                 fpShootPoint.IsMarked = true;
                 spShootPoint.IsMarked = true;
+
+                CheckShipsStatuses();
             }
+        }
+        public void CheckShipsStatuses()
+        {
+            var fpDestroyedShips = _firstPlayer.GameBoard.Ships.Where(s => !s.IsDestroyed && s.ShipCoordinates.All(p => p.IsMarked)).ToList();
+            var spDestroyedShips = _secondPlayer.GameBoard.Ships.Where(s => !s.IsDestroyed && s.ShipCoordinates.All(p => p.IsMarked)).ToList();
+            fpDestroyedShips.ForEach(s => s.IsDestroyed = true);
+            spDestroyedShips.ForEach(s => s.IsDestroyed = true);
+
         }
     }
 }
