@@ -17,7 +17,21 @@ namespace BattleShip
         {
             Ships = new List<Ship>();
             GameField = new List<Coordinate>();
+            GenerateGameDetails();
         }
+
+        public void GenerateGameDetails()
+        {
+            GenerateGameField();
+            GenerateShip(ShipType.Carrier);
+            GenerateShip(ShipType.BattleShip);
+            GenerateShip(ShipType.Destroyer);
+            GenerateShip(ShipType.Destroyer);
+            GenerateShip(ShipType.PatrolBoat);
+            GenerateShip(ShipType.PatrolBoat);
+            GenerateShip(ShipType.PatrolBoat);               
+        }
+
 
         public void GenerateGameField()
         {
@@ -135,6 +149,34 @@ namespace BattleShip
             var randDirection = (Direction)_random.Next(0, 2);
 
             return randDirection;
-        } 
+        }
+
+        /*  printing GameBoard for testing
+        public void PrintGameBoard()
+        {
+            for (int i = 1; i < 11; i++)
+            {
+                for (int j = 1; j < 11; j++)
+                {
+                    var gameField = GameField.First(element => element.X == j && element.Y == i);
+                    var shipFields = Ships.Select(ship => ship.ShipCoordinates).ToList();
+                    var isShipField = shipFields.Any(e => e.Contains(gameField));
+
+                    if (!gameField.IsAvailable && isShipField)
+                    {
+                        Console.Write("[o]");
+
+                    }
+                    else
+                    {
+                        Console.Write("[~]");
+
+                    }
+
+                }
+                Console.WriteLine();
+            }
+        }*/
+
     }
 }
