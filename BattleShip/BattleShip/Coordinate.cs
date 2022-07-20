@@ -11,12 +11,14 @@ namespace BattleShip
         public int X { get; set; }
         public int Y { get; set; }
         public bool IsAvailable { get; set; }
+        public bool IsMarked { get; set; }
 
         public Coordinate(int x, int y)
         {
             X = x;
             Y = y;
             IsAvailable = true;
+            IsMarked =  false;
         }
 
         public override string ToString()
