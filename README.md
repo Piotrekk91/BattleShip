@@ -5,7 +5,7 @@ Project with simulation of battleship game:
 - The movement goes to the next player after each shot, 
 - The first player who shoot down all enemy ships wins
 - There are three possible game result:
-  *Win player 1
-  *Win player 2 
+  *Win player1
+  *Win player2 
   *Tie
 - The game result with playing time and round number are displayed at the end of the simulation
