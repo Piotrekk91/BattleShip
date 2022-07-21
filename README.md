@@ -8,4 +8,4 @@ Project with simulation of battleship game:
   *Win player 1
   *Win player 2 
   *Tie
-The game result with playing time and round number are displayed at the end of the simulation
+- The game result with playing time and round number are displayed at the end of the simulation
