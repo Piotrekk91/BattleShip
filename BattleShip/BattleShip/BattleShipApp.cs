@@ -67,6 +67,13 @@ namespace BattleShip
             {
                 throw new ArgumentNullException(nameof(randSPShot), "Incorrect hit point selected!");
             }
+
+            if (fpShootPoint.IsMarked == true || spShootPoint.IsMarked == true)
+            {
+                SimulateRound();
+                return;
+            }
+
             fpShootPoint.IsMarked = true;
             spShootPoint.IsMarked = true;
 
