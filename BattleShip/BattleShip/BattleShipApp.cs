@@ -50,26 +50,25 @@ namespace BattleShip
 
         private void SimulateRound()
         {
-            var randFPIndex = _random.Next(_firstPlayer.GameBoard.GameField.Count);
-            var randFPShot = _firstPlayer.GameBoard.GameField[randFPIndex];
+            var fpPointNotMarked = _firstPlayer.GameBoard.GameField.Where(c => c.IsMarked == false).ToList();
+            var randFPHitPoint = fpPointNotMarked.OrderBy(c => Guid.NewGuid()).FirstOrDefault();
+            var fpHitPoint = _firstPlayer.GameBoard.GameField.SingleOrDefault(c => c.X == randFPHitPoint.X && c.Y == randFPHitPoint.Y);
 
-            var randSPIndex = _random.Next(_secondPlayer.GameBoard.GameField.Count);
-            var randSPShot = _secondPlayer.GameBoard.GameField[randSPIndex];
+            var spPointNotMarked = _secondPlayer.GameBoard.GameField.Where(c => c.IsMarked == false).ToList();
+            var randSPHitPoint = spPointNotMarked.OrderBy(c => Guid.NewGuid()).FirstOrDefault();
+            var spHitPoint = _secondPlayer.GameBoard.GameField.SingleOrDefault(c => c.X == randSPHitPoint.X && c.Y == randSPHitPoint.Y);
 
-            var fpShootPoint = _firstPlayer.GameBoard.GameField.SingleOrDefault(c => c.X == randFPShot.X && c.Y == randFPShot.Y);
-            var spShootPoint = _secondPlayer.GameBoard.GameField.SingleOrDefault(c => c.X == randSPShot.X && c.Y == randSPShot.Y);
-
-            if (fpShootPoint == null)
+            if (fpHitPoint == null)
             {
-                throw new ArgumentNullException(nameof(randFPShot), "Incorrect hit point selected!");
+                throw new ArgumentNullException(nameof(randFPHitPoint), "Incorrect hit point selected!");
             }
-            else if (spShootPoint == null)
+            else if (spHitPoint == null)
             {
-                throw new ArgumentNullException(nameof(randSPShot), "Incorrect hit point selected!");
+                throw new ArgumentNullException(nameof(randSPHitPoint), "Incorrect hit point selected!");
             }
 
-            fpShootPoint.IsMarked = true;
-            spShootPoint.IsMarked = true;
+            fpHitPoint.IsMarked = true;
+            spHitPoint.IsMarked = true;
 
             CheckShipsStatuses();
         }
